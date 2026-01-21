@@ -14,7 +14,7 @@ Descriptions
       I. Root Finding Algorithms
         * bisection_method.py
             - Implements the Bisection Method to find roots of a non-linear function defined as
-              f(x) = 4 - x\ln(x)$
+              f(x) = 4 - x*ln(x)$
             - Accepts user input for initial interval guesses a and b
             - Validates interval to ensure sign change f(a) * f(b) < 0
             - iteratively narrows the interval until the root is found within a specified tolerance
@@ -28,8 +28,7 @@ Descriptions
         * Gaussian_Adaptive.py
             - performs numerical integration using Adaptive Gaussian Quadrature
             - integrates the function f(x) = x^2 *ln(2x+5)
-            - recursively subdivides the integration interval until the error between coarse and fine estimates
-              below a tolerance
+            - recursively subdivides the integration interval until the error between coarse and fine                        estimates below a tolerance
             - includes a recursion depth limit of 50 levels to prevent infinite loops
         * Monte_Carlo.py
             - Demonstrates Monte Carlo integration to estimate the area of a defined 2D region and the
@@ -53,8 +52,7 @@ Descriptions
             - Implements the Classical 4th-Order Runge-Kutta (RK4) method to solve a system of first-order
               ordinary differential equations
             - includes a generic rk4_step function capable of handling n-dimensional systems
-    
-  2. Estimation Theory (MATLAB)
+   2. Estimation Theory (MATLAB)
        I. Cramer Rao Lower Bound (CRLB)
          * CRLB.m
              - Calculates the theoretical Cramer-Rao Lower Bound and the squared error for a simple
