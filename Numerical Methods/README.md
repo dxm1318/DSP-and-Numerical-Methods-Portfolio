@@ -11,7 +11,6 @@ numerical integration, Monte Carlo simulations, differentiation, and Maximum Lik
 Descriptions
    
    1. Numerical Analysis (Python)
-      I. Root Finding Algorithms
         * bisection_method.py
             - Implements the Bisection Method to find roots of a non-linear function defined as
               f(x) = 4 - x*ln(x)$
@@ -24,7 +23,6 @@ Descriptions
             - Initializes using two steps of Newton's method
             - Solves the quadratic approximation to find complex roots
             - Outputs the root and iteration count upon convergence
-      II. Numerical Integration
         * Gaussian_Adaptive.py
             - performs numerical integration using Adaptive Gaussian Quadrature
             - integrates the function f(x) = x^2 *ln(2x+5)
@@ -40,20 +38,17 @@ Descriptions
               f(x,y,z) = y*x^2 + z*ln(y) + exp(x)
             - integrates over a rectangular volume defined by x in [-1,1], y in [3,6] and z in [0,2]
             - demonstrates convergence as the sample size (N) increases
-      III. Numerical Differentiation
         * richardsonextrapolation.py
             - Approximates the derivative of a function using Richardson Extrapolation to improve the
               accuracy of the central difference method
             - Constructs a table of approximations where each column eliminates a higher-order error
               term (O(h^2), O(h^4), etc.)
             - checks for convergence against a tolerance (1e-12)
-      IV. Ordinary Differential Equations (ODEs)
         * Rk4.py
             - Implements the Classical 4th-Order Runge-Kutta (RK4) method to solve a system of first-order
               ordinary differential equations
             - includes a generic rk4_step function capable of handling n-dimensional systems
    2. Estimation Theory (MATLAB)
-       I. Cramer Rao Lower Bound (CRLB)
          * CRLB.m
              - Calculates the theoretical Cramer-Rao Lower Bound and the squared error for a simple
                DC signal in white Gaussian noise.
