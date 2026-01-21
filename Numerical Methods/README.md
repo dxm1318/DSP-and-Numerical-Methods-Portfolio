@@ -13,7 +13,7 @@ Descriptions
    1. Numerical Analysis (Python)
         * bisection_method.py
             - Implements the Bisection Method to find roots of a non-linear function defined as
-              f(x) = 4 - x*ln(x)$
+              f(x) = 4 - x*ln(x)
             - Accepts user input for initial interval guesses a and b
             - Validates interval to ensure sign change f(a) * f(b) < 0
             - iteratively narrows the interval until the root is found within a specified tolerance
