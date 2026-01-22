@@ -2,7 +2,7 @@ Numerical Methods & Estimation Theory
 
 Author: Daniel Martens
 
-Overview
+##Overview
 
 This folder contains a collection of Python and MATLAB scripts demonstrating fundamental numerical analysis 
 techniques and estimation theory concepts. The projects cover a wide range of topics including root finding, 
@@ -56,7 +56,7 @@ Descriptions
              - Performs a Monte Carlo simulation to verify the CRLB for estimating the Mean (A) and
                Variance (B) of a signal
              - runs 5000 trials to compute the Mean Squared Error (MSE) of the estimators
-             - Visualizes the convergence of the estimated MSE to the theoretical CRLB lines for both parameters
+             - Visualizes the convergence of the estimated MSE to the theoretical CRLB lines for both                         parameters
          * MLE.m
              - Implements a Maximum Likelihood Estimator to recover frequency, amplitude, and phase of a
                sinusoidal signal in noise
@@ -70,6 +70,7 @@ Descriptions
 Prerequisites
 
 Python 3.x (standard libraries: math, random, cmath)
+
 MATLAB (R2018a or later)
 
 Usage
