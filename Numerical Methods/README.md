@@ -2,7 +2,7 @@ Numerical Methods & Estimation Theory
 
 Author: Daniel Martens
 
-##Overview
+Overview
 
 This folder contains a collection of Python and MATLAB scripts demonstrating fundamental numerical analysis 
 techniques and estimation theory concepts. The projects cover a wide range of topics including root finding, 
