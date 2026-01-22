@@ -1,0 +1,40 @@
+function y = Freq_Domain_Conv(x,h)
+    
+    N = length(x) + length(h) - 1;
+
+    x_fft = fft(x,N);
+    h_fft = fft(h,N);
+
+    y_fft = x_fft.*h_fft;
+    y = ifft(y_fft,N);
+
+    figure;
+    subplot(2,1,1);
+    plot(x);
+    title('Input Signal');
+    subplot(2,1,2);
+    plot(h);
+    title('Input h');
+    
+    figure;
+    subplot(2,1,1);
+    plot(y_fft);
+    title('output frequency domain');
+    subplot(2,1,2);
+    plot(y)
+    title('output time domain');
+
+end
+
+
+
+%This function does the following:
+    %1) takes 2 input signals
+    %2) calculates the expected length of the convolution
+    %3) uses fft and transforms signals into freq domain
+        %inputs = signal, number of analysis pts = length of conv
+    %4) performs element wise mult.
+        %** element-wise mult. in freq domain = convolution
+            %in the sample domain
+
+    %5) uses ifft() to transform result back into the sample domain
