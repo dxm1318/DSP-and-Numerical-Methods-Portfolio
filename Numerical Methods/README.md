@@ -10,7 +10,7 @@ numerical integration, Monte Carlo simulations, differentiation, and Maximum Lik
 
 ## Descriptions
    
-   1. Numerical Analysis (Python)
+   1. **Numerical Analysis (Python)**
         * bisection_method.py
             - Implements the Bisection Method to find roots of a non-linear function defined as
               f(x) = 4 - x*ln(x)
@@ -48,7 +48,7 @@ numerical integration, Monte Carlo simulations, differentiation, and Maximum Lik
             - Implements the Classical 4th-Order Runge-Kutta (RK4) method to solve a system of first-order
               ordinary differential equations
             - includes a generic rk4_step function capable of handling n-dimensional systems
-   2. Estimation Theory (MATLAB)
+   2. **Estimation Theory (MATLAB)**
          * CRLB.m
              - Calculates the theoretical Cramer-Rao Lower Bound and the squared error for a simple
                DC signal in white Gaussian noise.
