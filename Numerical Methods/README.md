@@ -1,14 +1,14 @@
-Numerical Methods & Estimation Theory
+# Numerical Methods & Estimation Theory
 
 Author: Daniel Martens
 
-Overview
+## Overview
 
 This folder contains a collection of Python and MATLAB scripts demonstrating fundamental numerical analysis 
 techniques and estimation theory concepts. The projects cover a wide range of topics including root finding, 
 numerical integration, Monte Carlo simulations, differentiation, and Maximum Likelihood Estimation (MLE).
 
-Descriptions
+## Descriptions
    
    1. Numerical Analysis (Python)
         * bisection_method.py
@@ -67,13 +67,13 @@ Descriptions
           * MLE_test.m
              - a test script to execute the MLE function with defined parameters
 
-Prerequisites
+## Prerequisites
 
 Python 3.x (standard libraries: math, random, cmath)
 
 MATLAB (R2018a or later)
 
-Usage
+## Usage
 
 Python scripts --> run from terminal or IDE
 
