@@ -26,7 +26,7 @@ Signal Processing Toolbox
 
 **biquad_filter.m**: class definition for a peaking filter
 
-**biquad_filter_test.m**: test script biquad_filter.m
+**biquad_filter_test.m**: test script for biquad_filter.m
               
                   
   
