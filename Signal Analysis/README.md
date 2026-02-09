@@ -67,4 +67,4 @@ matlab
 
 ## Software Requirements 
 - Base MATLAB
-- MATLAB Signal Processing Toolbox: hann(), hamming(), spectrogram()
+- MATLAB Signal Processing Toolbox: `hann()`, `hamming()`, and `spectrogram()`
