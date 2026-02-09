@@ -65,3 +65,9 @@ matlab
 `DSP_Basics`
 `DAT_Ch2`
 `DAT_Ch10_Project`
+
+## Software Requirements
+
+- Base MATLAB
+- Signal Processing Toolbox: `filtfilt()` and `freqz()` in `DAT_Ch10_Project.m`
+- Signal Processing Toolbox `zplane()`,`freqz()`, and `spectrogram()` in `DSP_Basics.m`
