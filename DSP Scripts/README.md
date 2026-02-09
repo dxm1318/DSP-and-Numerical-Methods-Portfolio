@@ -70,4 +70,4 @@ matlab
 
 - Base MATLAB
 - Signal Processing Toolbox: `filtfilt()` and `freqz()` in `DAT_Ch10_Project.m`
-- Signal Processing Toolbox `zplane()`,`freqz()`, and `spectrogram()` in `DSP_Basics.m`
+- Signal Processing Toolbox: `zplane()`,`freqz()`, and `spectrogram()` in `DSP_Basics.m`
