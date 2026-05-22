@@ -1,27 +1,24 @@
 # Waveform Generation and Analysis (MATLAB)
 
-This repository contains MATLAB scripts for **generating, visualizing, and testing waveforms**. The code is intended for educational use in courses related to signals, waves, or digital signal processing.
+This folder contains an object-oriented MATLAB class for **generating, visualizing, and testing waveforms**. Intended for use in signals, waves, or digital signal processing coursework.
 
 ---
 
-## Files Description
+## Files
 
 ### `Waves.m`
-Core script or function for **waveform generation**.
+OOP class for **waveform generation**.
 
 **Description:**
-- Generates one or more waveforms (e.g., sinusoidal or other basic signals)
-- Defines key signal parameters such as:
-  - Frequency
-  - Amplitude
-  - Phase
-  - Sampling time or duration
-- Produces time-domain representations of waves
-- May include plots for visualization
+- Generates standard waveforms: sine, square, sawtooth, and others
+- Configurable parameters: frequency, amplitude, phase, sampling rate, and duration
+- Produces time-domain signal arrays and plots for visualization
+- Designed as a reusable signal source for other DSP scripts
 
-**Purpose:**
-- Demonstrate fundamental wave properties
-- Serve as the main signal-generation module used by other scripts
+**Usage:**
+```matlab
+w = Waves(frequency, amplitude, phase, duration, sample_rate);
+```
 
 ---
 
@@ -29,15 +26,16 @@ Core script or function for **waveform generation**.
 Test and demonstration script for the waveform generator.
 
 **Description:**
-- Calls `Waves.m`
-- Tests waveform generation under different parameter settings
-- Visualizes results using plots
-- Serves as an entry point for running and validating the waveform code
+- Instantiates `Waves` with various parameter configurations
+- Verifies waveform output through plots
+- Tests edge cases and parameter boundaries
 
 **Usage:**
-matlab
-`Waves_test`
+```matlab
+Waves_test
+```
 
-##Software Requirements
-- Base MATLAB
-- Signal Processing Toolbox: `sawtooth()`, `square()`, and `spectrogram()` in `Waves.m`
+## Requirements
+
+- MATLAB (base)
+- Signal Processing Toolbox — `sawtooth()`, `square()`, `spectrogram()` in `Waves.m`
