@@ -1,32 +1,41 @@
 # MATLAB Biquad Filters
 
-Author: Daniel Martens
+**Author:** Daniel Martens
 
 ## Overview
 
-This folder provides a object-oriented MATLAB implementation of digital biquad filters. It includes support for low pass (LPF), high pass (HPF), and peaking filters, along with scripts to visualize frequency response and process audio signals. 
+This folder provides object-oriented MATLAB implementations of digital biquad filters. It includes support for low-pass (LPF), high-pass (HPF), and peaking filters, along with test scripts to visualize frequency response and process audio signals.
 
-## System Requirements
-
-### MATLAB Version
-  * reccomended: MATLAB R2019b or later
-  * minimum: MATLAB R2016b required for classdef and updated signal processing functions
-### Required Toolbox
-Signal Processing Toolbox
-  * freqz(): visualize frequency response
-  * spectrogram(): used in peaking filter test script
-  * chirp(): generate Exponential Sine Sweep (ESS)
-  * db2mag(): convert dB to magnitude
+---
 
 ## File Overview
 
-**biquad.m**: class definition for standard LPF and HPF filters
+### HPF/LPF Biquad
 
-**biquad_test.m**: test script for biquad.m
+| File | Description |
+|------|-------------|
+| `biquad.m` | Class definition for LPF and HPF biquad filters |
+| `biquad_test.m` | Test script — frequency response plots and signal processing verification |
 
-**biquad_filter.m**: class definition for a peaking filter
+### Peaking Filter
 
-**biquad_filter_test.m**: test script for biquad_filter.m
-              
-                  
-  
+| File | Description |
+|------|-------------|
+| `biquad_filter.m` | Class definition for a parametric peaking filter |
+| `biquad_filter_test.m` | Test script — chirp signal input, spectrogram output |
+| `flute.wav` | Sample audio file used in testing |
+
+---
+
+## Requirements
+
+### MATLAB Version
+- Recommended: MATLAB R2019b or later
+- Minimum: MATLAB R2016b (required for `classdef` and updated signal processing functions)
+
+### Signal Processing Toolbox
+Required for:
+- `freqz()` — frequency response visualization
+- `spectrogram()` — peaking filter test script
+- `chirp()` — exponential sine sweep generation
+- `db2mag()` — dB to magnitude conversion
