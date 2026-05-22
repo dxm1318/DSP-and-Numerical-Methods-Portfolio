@@ -1,25 +1,19 @@
 # Audio Feature and Spectral Analysis (MATLAB)
 
-This repository contains MATLAB scripts for **audio signal analysis**, focusing on spectral features and perceptual characteristics such as **spectral centroid**, **loudness**, and **buffer-based spectral analysis**. A test script is included to demonstrate and validate the functionality of the analysis modules.
-
-The code is intended for educational and experimental use in digital signal processing and audio analysis.
+This folder contains MATLAB scripts for **audio signal analysis**, focusing on spectral features and perceptual characteristics such as **spectral centroid**, **loudness**, and **buffer-based spectral analysis**. A test script demonstrates and validates the full analysis pipeline.
 
 ---
 
-## Files Description
+## Files
 
 ### `buffer_spec_analysis.m`
-Performs **buffer-based spectral analysis** on an audio signal.
+Performs **frame-based spectral analysis** on an audio signal.
 
 **Description:**
 - Segments the input signal into short-time buffers (frames)
 - Applies spectral analysis to each buffer
-- Useful for short-time or frame-based processing of audio signals
-- Forms the basis for time–frequency analysis
-
-**Purpose:**
-- Analyze how spectral content evolves over time
-- Support feature extraction from buffered signals
+- Tracks how spectral content evolves over time
+- Forms the basis for further feature extraction
 
 ---
 
@@ -29,10 +23,9 @@ Computes the **spectral centroid** of an audio signal.
 **Description:**
 - Estimates the center of mass of the magnitude spectrum
 - Provides a measure related to the perceived *brightness* of a sound
-- Typically computed on a frame-by-frame basis
+- Computed on a frame-by-frame basis
 
-**Output:**
-- Spectral centroid values over time or per frame
+**Output:** Spectral centroid values over time
 
 ---
 
@@ -40,31 +33,28 @@ Computes the **spectral centroid** of an audio signal.
 Performs **loudness analysis** on an audio signal.
 
 **Description:**
-- Estimates signal loudness based on amplitude or energy-related measures
-- Can be used to track perceived intensity changes over time
+- Estimates loudness based on amplitude or energy measures
+- Tracks perceived intensity changes over time
 - Complements spectral features in audio characterization
 
-**Output:**
-- Loudness values for the analyzed signal or frames
+**Output:** Loudness values per frame or over the full signal
 
 ---
 
 ### `test_script.m`
-Test and demonstration script for the audio analysis functions.
+Entry point for the full audio analysis pipeline.
 
 **Description:**
 - Loads or defines an example audio signal
-- Calls:
-  - `buffer_spec_analysis`
-  - `sc_analysis`
-  - `loudness_analysis`
-- Visualizes results using plots
-- Serves as an entry point for running and validating the analysis pipeline
+- Calls `buffer_spec_analysis`, `sc_analysis`, and `loudness_analysis`
+- Visualizes all features using plots
 
 **Usage:**
-matlab
-`test_script`
+```matlab
+test_script
+```
 
-## Software Requirements 
-- Base MATLAB
-- MATLAB Signal Processing Toolbox: `hann()`, `hamming()`, and `spectrogram()`
+## Requirements
+
+- MATLAB (base)
+- Signal Processing Toolbox — `hann()`, `hamming()`, `spectrogram()`
