@@ -104,8 +104,10 @@ ig.plot(0, np.pi, n=11, method='trapezoidal')
 |------|-------------|
 | `CRLB.m` | Simulates a DC level A in white Gaussian noise, estimates A with the sample mean, and returns the squared error alongside the theoretical Cramér-Rao Lower Bound (`var/N`) |
 | `MC_CRLB.m` | Monte Carlo verification over 5000 trials; plots the running MSE of the estimates of the mean (A) and the variance (B) converging to their CRLBs |
-| `MLE.m` | Maximum Likelihood Estimator for the frequency, amplitude, and phase of a sinusoid in noise; searches a frequency grid to minimize the cost function J(f) = ‖x − H·α‖² and plots the cost function and the reconstructed signal |
+| `MLE.m` | Maximum Likelihood Estimator for the frequency, amplitude, and phase of a sinusoid in noise. The frequency minimizes the cost function J(f) = ‖x − H·α‖²: a coarse grid search locates the minimum, then `fminbnd` refines it to high precision (a grid alone is limited to a resolution of 1/(N−1)). Amplitude and phase come from the least-squares fit at that frequency. Plots the cost function and the reconstructed signal |
 | `MLE_test.m` | Test script for `MLE.m` with predefined parameters |
+
+**Note:** For a real-valued sinusoid, a frequency `f` and its mirror `1 − f` fit the data equally well, so `MLE.m` may report either one. When it reports the mirror, the phase comes back as `2π − φ`; the reconstructed signal is the same in both cases.
 
 **Usage:** Open the files in MATLAB and run them directly, or call the functions from the command window.
 
