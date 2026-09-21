@@ -41,8 +41,10 @@ f0_ML = f_test(idx);
 H_ML = [cos(2*pi*f0_ML*n) sin(2*pi*f0_ML*n)];
 alpha_ML = H_ML\x;
 
+% A*cos(2*pi*f*n + phi) = A*cos(phi)*cos(2*pi*f*n) - A*sin(phi)*sin(2*pi*f*n),
+% so alpha = [A*cos(phi); -A*sin(phi)] and the phase is atan2(-alpha(2), alpha(1))
 A_ML = norm(alpha_ML);
-phi_ML = mod(atan2(alpha_ML(2),alpha_ML(1)),2*pi);
+phi_ML = mod(atan2(-alpha_ML(2),alpha_ML(1)),2*pi);
 
 %ML Signal (noise-free)
 x_ML = A_ML*cos(2*pi*f0_ML*n + phi_ML);

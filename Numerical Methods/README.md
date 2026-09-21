@@ -42,7 +42,7 @@ Each file can be run directly (`python find_root.py`) to execute a demo that pri
 
 ### FindRoot
 
-Root finding for a single-variable function. `f` can be a callable or a SymPy expression with one free variable; for a symbolic `f`, its derivative is computed automatically for Newton-Raphson. Otherwise Newton-Raphson uses a central-difference derivative unless you pass `fprime`. All three methods are iterative rather than recursive, so there is no recursion-depth limit. The iterates from the most recent solve are stored in `history` and drawn by `plot`.
+Root finding for a single-variable function. `f` can be a callable or a SymPy expression with one free variable; for a symbolic `f`, its derivative is computed automatically for Newton-Raphson. Otherwise Newton-Raphson uses a central-difference derivative unless you pass `fprime`. All three methods are iterative rather than recursive, so there is no recursion-depth limit. The iterates from the most recent solve are stored in `history` and drawn by `plot`. If a method does not converge (for example it reaches `max_iter`, or the secant line goes flat), it raises a `RuntimeWarning` with the last iterate and its residual, and `converged` is set to `False`.
 
 ```python
 from find_root import FindRoot

@@ -45,6 +45,12 @@ class Differentiation:
 
         print(f"Available differentiation methods: {', '.join(self.METHODS)}")
 
+    def _eval(self, x):
+        '''evaluate f at x, broadcast to the shape of x, so that an f that
+        returns a single number (e.g. lambda x: 5) still works as a function
+        of an array'''
+        return np.broadcast_to(np.asarray(self.f(x)), np.shape(x))
+
     @staticmethod
     def _validate_bounds(a, b, n):
         if not (isinstance(a, numbers.Real) and isinstance(b, numbers.Real)
@@ -54,6 +60,18 @@ class Differentiation:
             raise ValueError('a must be strictly less than b')
         if n < 2:
             raise ValueError('n must be at least 2')
+
+    @staticmethod
+    def _validate_smooth(n, window, noise_std):
+        if not isinstance(window, numbers.Integral) or window < 0:
+            raise ValueError('window must be a non-negative integer')
+        if not isinstance(noise_std, numbers.Real) or noise_std < 0:
+            raise ValueError('noise_std must be a non-negative number')
+        # 2*window + 1 points per average, and 3 averages for one derivative
+        if n < 2 * window + 3:
+            raise ValueError(
+                f'n = {n} is too small for window = {window}; '
+                f'need n >= 2*window + 3 = {2 * window + 3}')
 
     # ------------------------------------------------------------------
     # Differentiation
@@ -74,22 +92,25 @@ class Differentiation:
         if method not in self.METHODS:
             raise ValueError(f"method must be one of {self.METHODS}")
 
+        if method == 'smooth':
+            self._validate_smooth(n, window, noise_std)
+
         x = np.linspace(a, b, n)
 
         if method == 'forward':
-            dfx = np.diff(self.f(x)) / np.diff(x)
+            dfx = np.diff(self._eval(x)) / np.diff(x)
             X = x[:-1]
 
         elif method == 'backward':
-            dfx = (self.f(x[1:]) - self.f(x[:-1])) / (x[1:] - x[:-1])
+            dfx = (self._eval(x[1:]) - self._eval(x[:-1])) / (x[1:] - x[:-1])
             X = x[1:]
 
         elif method == 'central':
-            dfx = (self.f(x[2:]) - self.f(x[:-2])) / (x[2:] - x[:-2])
+            dfx = (self._eval(x[2:]) - self._eval(x[:-2])) / (x[2:] - x[:-2])
             X = x[1:-1]
 
         else:  # smooth
-            y = self.f(x)
+            y = self._eval(x)
             if noise_std:
                 y = y + np.random.randn(len(y)) * noise_std
             dfx, X = self._smooth_central_diff(x, y, window)
@@ -136,7 +157,7 @@ class Differentiation:
         kwargs: forwarded to differentiate() when method='smooth'
         '''
         x_smooth = np.linspace(a, b, 500)
-        y_smooth = self.f(x_smooth)
+        y_smooth = self._eval(x_smooth)
         dfx, X = self.differentiate(a, b, n, method=method, **kwargs)
 
         fig, ax1 = plt.subplots(figsize=figsize)
@@ -157,7 +178,7 @@ class Differentiation:
             slope, tx, ty = self.tangent_line(point, span=(b - a) * 0.2)
             ax1.plot(tx, ty, 'g-', linewidth=2,
                      label=f'Tangent at x={point} (slope={slope:.4f})')
-            ax1.plot(point, self.f(point), 'go', markersize=8)
+            ax1.plot(point, self._eval(point), 'go', markersize=8)
             lines1, labels1 = ax1.get_legend_handles_labels()
 
         ax1.legend(lines1 + lines2, labels1 + labels2, loc='best')

@@ -45,6 +45,12 @@ class Integration:
 
         print(f"Available integration methods: {', '.join(self.METHODS)}")
 
+    def _eval(self, x):
+        '''evaluate f at x, broadcast to the shape of x, so that an f that
+        returns a single number (e.g. lambda x: 5) still works as a function
+        of an array instead of being summed as one sample'''
+        return np.broadcast_to(np.asarray(self.f(x)), np.shape(x))
+
     @staticmethod
     def _validate_bounds(a, b, n):
         if not (isinstance(a, numbers.Real) and isinstance(b, numbers.Real)
@@ -88,36 +94,36 @@ class Integration:
     def _left_riemann(self, a, b, n):
         h = (b - a) / (n - 1)
         x = np.linspace(a, b, n)
-        return h * np.sum(self.f(x[:-1]))
+        return h * np.sum(self._eval(x[:-1]))
 
     def _right_riemann(self, a, b, n):
         h = (b - a) / (n - 1)
         x = np.linspace(a, b, n)
-        return h * np.sum(self.f(x[1:]))
+        return h * np.sum(self._eval(x[1:]))
 
     def _midpoint_riemann(self, a, b, n):
         h = (b - a) / (n - 1)
         x = np.linspace(a, b, n)
         y = (x[1:] + x[:-1]) / 2
-        return h * np.sum(self.f(y))
+        return h * np.sum(self._eval(y))
 
     def _trapezoidal(self, a, b, n):
         h = (b - a) / (n - 1)
         x = np.linspace(a, b, n)
-        return (h / 2) * (self.f(x[0]) + 2 * np.sum(self.f(x[1:-1])) + self.f(x[-1]))
+        return (h / 2) * (self._eval(x[0]) + 2 * np.sum(self._eval(x[1:-1])) + self._eval(x[-1]))
 
     def _simpsons(self, a, b, n):
         if n % 2 == 0:
             raise ValueError('n must be odd for Simpsons rule')
         h = (b - a) / (n - 1)
         x = np.linspace(a, b, n)
-        return (h / 3) * (self.f(x[0]) + 4 * np.sum(self.f(x[1:-1:2]))
-                           + 2 * np.sum(self.f(x[2:-2:2])) + self.f(x[-1]))
+        return (h / 3) * (self._eval(x[0]) + 4 * np.sum(self._eval(x[1:-1:2]))
+                           + 2 * np.sum(self._eval(x[2:-2:2])) + self._eval(x[-1]))
 
     def _monte_carlo(self, a, b, n):
         '''mean-value Monte Carlo estimate: average f at n random points in [a, b]'''
         x = np.sort(np.random.uniform(a, b, n))
-        return ((b - a) / n) * np.sum(self.f(x))
+        return ((b - a) / n) * np.sum(self._eval(x))
 
     # ------------------------------------------------------------------
     # Plotting
@@ -129,13 +135,13 @@ class Integration:
 
         method = method.lower()
         x_smooth = np.linspace(a, b, 500)
-        y_smooth = self.f(x_smooth)
+        y_smooth = self._eval(x_smooth)
         x = np.linspace(a, b, n)
-        y = self.f(x)
+        y = self._eval(x)
 
         if method == 'monte_carlo':
             x_mc = np.sort(np.random.uniform(a, b, n))
-            y_mc = self.f(x_mc)
+            y_mc = self._eval(x_mc)
             area = ((b - a) / n) * np.sum(y_mc)
         else:
             area = self.integrate(a, b, n, method=method)
@@ -151,7 +157,7 @@ class Integration:
                 heights = y[1:]
             else:
                 mids = (x[1:] + x[:-1]) / 2
-                heights = self.f(mids)
+                heights = self._eval(mids)
                 ax.plot(mids, heights, 'ko', markersize=3)
             ax.bar(x[:-1], heights, width=h, align='edge', alpha=0.4,
                    edgecolor='black', color='orange', label='subintervals')

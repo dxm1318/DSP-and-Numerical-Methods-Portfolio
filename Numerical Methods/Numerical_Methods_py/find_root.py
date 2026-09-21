@@ -27,6 +27,7 @@ secant_method). This class uses the ITERATIVE version of each, because:
 """
 
 import numbers
+import warnings
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -39,8 +40,9 @@ class FindRoot:
 
     def __init__(self, f):
         self.f = f
-        self.df = None       # populated automatically for symbolic f
-        self.history = []    # iterates from the most recent solve, for plot()
+        self.df = None        # populated automatically for symbolic f
+        self.history = []     # iterates from the most recent solve, for plot()
+        self.converged = None  # True/False after a solve; see _finish()
         self._validate()
 
     # ------------------------------------------------------------------
@@ -76,6 +78,18 @@ class FindRoot:
         '''central-difference derivative, used when f has no closed-form df'''
         return (self.f(x + h) - self.f(x - h)) / (2 * h)
 
+    def _finish(self, x, history, converged, method, reason):
+        '''record the outcome of a solve; warn (rather than silently return a
+        non-root) when the method did not converge'''
+        self.history = history
+        self.converged = converged
+        if not converged:
+            warnings.warn(
+                f"{method} did not converge: {reason}. Returning the last "
+                f"iterate x = {x}, where |f(x)| = {np.abs(self.f(x)):.3e}",
+                RuntimeWarning, stacklevel=3)
+        return x
+
     # ------------------------------------------------------------------
     # Bisection
     # ------------------------------------------------------------------
@@ -84,7 +98,9 @@ class FindRoot:
         '''Bracketed bisection method.
 
         a, b -> interval such that f(a) and f(b) have opposite signs
-        returns the approximate root
+        returns the approximate root; if |f| is still not below tol after
+        max_iter iterations, a RuntimeWarning is raised and self.converged is
+        False
         '''
         if not (isinstance(a, numbers.Real) and isinstance(b, numbers.Real)):
             raise TypeError('a and b must be a float or int')
@@ -111,8 +127,9 @@ class FindRoot:
             fm = self.f(m)
             history.append(m)
 
-        self.history = history
-        return m
+        # the loop can also end by using up max_iter, so check the last iterate
+        return self._finish(m, history, bool(np.abs(fm) < tol), 'bisection',
+                            f'reached max_iter = {max_iter}')
 
     # ------------------------------------------------------------------
     # Newton-Raphson
@@ -124,6 +141,9 @@ class FindRoot:
         fprime is optional if this instance was built from a symbolic
         expression (its derivative is already known); otherwise a
         central-difference derivative is used unless fprime is supplied.
+
+        returns the approximate root; if it has not converged after max_iter
+        iterations, a RuntimeWarning is raised and self.converged is False
         '''
         if not isinstance(x0, numbers.Real):
             raise TypeError('x0 must be an int or float')
@@ -137,8 +157,7 @@ class FindRoot:
         for _ in range(max_iter):
             fx = self.f(x_prev)
             if np.abs(fx) < tol:
-                self.history = history
-                return x_prev
+                return self._finish(x_prev, history, True, 'newton', '')
 
             dfx = df(x_prev)
             if np.abs(dfx) < 1e-12 or np.isinf(dfx) or np.isnan(dfx):
@@ -154,13 +173,13 @@ class FindRoot:
 
             history.append(x_next)
             if np.abs(x_next - x_prev) < tol:
-                self.history = history
-                return x_next
+                return self._finish(x_next, history, True, 'newton', '')
 
             x_prev = x_next
 
-        self.history = history
-        return x_prev
+        # the last update above was never checked against tol
+        return self._finish(x_prev, history, bool(np.abs(self.f(x_prev)) < tol),
+                            'newton', f'reached max_iter = {max_iter}')
 
     # ------------------------------------------------------------------
     # Secant
@@ -168,7 +187,12 @@ class FindRoot:
 
     def secant(self, x0, x1, tol=1e-10, max_iter=5000):
         '''Secant method using two initial guesses x0, x1 (no derivative
-        required).'''
+        required).
+
+        returns the approximate root; if it stalls on a flat secant line or
+        has not converged after max_iter iterations, a RuntimeWarning is
+        raised and self.converged is False
+        '''
 
         if not (isinstance(x0, numbers.Real) and isinstance(x1, numbers.Real)):
             raise TypeError('x0 and x1 must be a float or int')
@@ -180,20 +204,21 @@ class FindRoot:
         for _ in range(max_iter):
             fx1 = self.f(x1)
             if np.abs(fx1 - fx0) < 1e-12:
-                break
+                # a flat secant line is only fine if we are already at a root
+                return self._finish(x1, history, bool(np.abs(fx1) < tol), 'secant',
+                                    'f(x1) - f(x0) is ~0, so the secant line is flat')
 
             x2 = x1 - fx1 * (x1 - x0) / (fx1 - fx0)
             history.append(x2)
 
             if np.abs(x2 - x1) < tol:
-                self.history = history
-                return x2
+                return self._finish(x2, history, True, 'secant', '')
 
             x0, fx0 = x1, fx1
             x1 = x2
 
-        self.history = history
-        return x1
+        return self._finish(x1, history, False, 'secant',
+                            f'reached max_iter = {max_iter}')
 
     # ------------------------------------------------------------------
     # Plotting

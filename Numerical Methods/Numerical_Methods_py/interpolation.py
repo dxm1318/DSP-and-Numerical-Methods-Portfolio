@@ -37,6 +37,9 @@ class Interpolation:
         if len(x) != len(y):
             raise ValueError('x and y must be arrays with the same length')
 
+        if not (np.all(np.isfinite(x)) and np.all(np.isfinite(y))):
+            raise ValueError('x and y must contain only finite values (no NaN or inf)')
+
         idx = np.argsort(x)
         self.x = x[idx]
         self.y = y[idx]
@@ -44,6 +47,11 @@ class Interpolation:
     def _check_X(self, X, allow_extrapolation=False):
 
         X = np.asarray(X, dtype=float)
+
+        # NaN fails every comparison below, so it would slip past the range
+        # check and then be silently dropped from the output
+        if not np.all(np.isfinite(X)):
+            raise ValueError('X must contain only finite values (no NaN or inf)')
 
         if not allow_extrapolation and (X.min() < self.x.min() or X.max() > self.x.max()):
             raise ValueError('X must be bounded within x')
