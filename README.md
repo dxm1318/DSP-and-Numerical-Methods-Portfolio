@@ -13,7 +13,7 @@ A collection of MATLAB and Python implementations covering core topics in **digi
 | [DSP Scripts](#dsp-scripts) | MATLAB | DSP fundamentals, textbook exercises, applied project |
 | [Filters](#filters) | MATLAB (OOP) | Biquad LPF/HPF, peaking filter |
 | [Fourier Transform](#fourier-transform) | MATLAB | DFT, IDFT, DSTFT (Short-Time Fourier Transform) |
-| [Numerical Methods](#numerical-methods) | Python + MATLAB | Root finding, integration, ODE solvers, MLE, CRLB |
+| [Numerical Methods](#numerical-methods) | Python + MATLAB | Root finding, interpolation, differentiation, integration, MLE, CRLB |
 | [Signal Analysis](#signal-analysis) | MATLAB | Spectral centroid, loudness, buffer-based spectral analysis |
 | [Wave Generator Class](#wave-generator-class) | MATLAB (OOP) | Waveform generation and visualization |
 
@@ -55,14 +55,12 @@ DSP-and-Numerical-Methods-Portfolio/
 │   └── Fourier_test_script.m     # Verification and visualization script
 │
 ├── Numerical Methods/
-│   ├── Numerical Methods Python/
-│   │   ├── bisection_method.py   # Bisection method for root finding
-│   │   ├── muellersmethod.py     # Müller's method for complex roots
-│   │   ├── Gaussian_Adaptive.py  # Adaptive Gaussian quadrature
-│   │   ├── Monte_Carlo.py        # 2D Monte Carlo integration
-│   │   ├── Monte_Carlo_3D.py     # 3D Monte Carlo integration
-│   │   ├── richardsonextrapolation.py  # Richardson extrapolation for derivatives
-│   │   └── RK4.py                # 4th-order Runge-Kutta ODE solver
+│   ├── README.md                 # Module documentation with usage examples
+│   ├── Numerical_Methods_py/
+│   │   ├── find_root.py          # FindRoot class: bisection, Newton-Raphson, secant
+│   │   ├── interpolation.py      # Interpolation class: linear, spline, Newton, Lagrange
+│   │   ├── differentiation.py    # Differentiation class: forward, backward, central, smoothed
+│   │   └── integration.py        # Integration class: Riemann, trapezoidal, Simpson's, Monte Carlo
 │   └── Numerical Methods MATLAB/
 │       ├── CRLB.m                # Cramér-Rao Lower Bound calculation
 │       ├── MC_CRLB.m             # Monte Carlo verification of CRLB (5000 trials)
@@ -143,15 +141,12 @@ A two-part collection covering **numerical analysis** (Python) and **estimation 
 
 **Python — Numerical Analysis**
 
-| Script | Method |
-|--------|--------|
-| `bisection_method.py` | Bisection root finding for f(x) = 4 − x·ln(x) |
-| `muellersmethod.py` | Müller's method for complex polynomial roots (Horner's evaluation) |
-| `Gaussian_Adaptive.py` | Adaptive Gaussian quadrature with recursive interval subdivision |
-| `Monte_Carlo.py` | 2D Monte Carlo integration via rejection sampling |
-| `Monte_Carlo_3D.py` | 3D Monte Carlo integration over a rectangular volume |
-| `richardsonextrapolation.py` | Richardson extrapolation table for derivative approximation |
-| `RK4.py` | Classical 4th-order Runge-Kutta for n-dimensional ODE systems |
+| Script | Class | Methods |
+|--------|-------|---------|
+| `find_root.py` | `FindRoot` | Bisection, Newton-Raphson (symbolic or numerical derivative), secant |
+| `interpolation.py` | `Interpolation` | Linear, cubic spline (natural/clamped), nearest neighbor, Newton, Lagrange |
+| `differentiation.py` | `Differentiation` | Forward, backward, central, and smoothed differences; tangent lines |
+| `integration.py` | `Integration` | Left/right/midpoint Riemann sums, trapezoidal, Simpson's, Monte Carlo |
 
 **MATLAB — Estimation Theory**
 
@@ -162,7 +157,7 @@ A two-part collection covering **numerical analysis** (Python) and **estimation 
 | `MLE.m` | MLE for sinusoidal frequency, amplitude, and phase recovery |
 | `MLE_test.m` | Test script for `MLE.m` |
 
-**Requirements:** Python 3.x (standard library only) · MATLAB R2018a or later
+**Requirements:** Python 3.9+ with NumPy, Matplotlib, and SymPy · MATLAB R2021a or later
 
 ---
 
@@ -196,4 +191,4 @@ An object-oriented MATLAB class for generating and visualizing standard waveform
 | MATLAB (R2016b+) | All MATLAB modules |
 | MATLAB Signal Processing Toolbox | Convolution Fcts, DSP Scripts, Filters, Signal Analysis, Wave Generator Class |
 | MATLAB Statistics & Machine Learning Toolbox | *(none at root level)* |
-| Python 3.x (standard library) | Numerical Methods — Python scripts |
+| Python 3.9+ with NumPy, Matplotlib, SymPy | Numerical Methods — Python classes |
